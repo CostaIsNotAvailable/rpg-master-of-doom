@@ -92,6 +92,10 @@ namespace RPGMasterOfDoom
                 }
                 Console.ForegroundColor = consoleColor;
 
+                Console.WriteLine("------------------- En attente -------------------");
+                Console.WriteLine("Appuyez sur n'importe quelle touche pour continuer");
+                Console.ReadKey();
+
                 round++;
             } while (remainingTeams.Count >= 2 && charactersThatWillAttack.Any());
             Console.WriteLine("------------------- Fin de la partie -------------------");
