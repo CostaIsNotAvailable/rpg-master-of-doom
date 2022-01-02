@@ -111,8 +111,14 @@ namespace RPGMasterOfDoom
 
         private bool isDamageCritical(DamageType damageType)
         {
-            return type == CharacterType.Holy && damageType == DamageType.Cursed 
-                || type == CharacterType.Impious && damageType == DamageType.Blessed;
+            try
+            {
+                return Constants.criticalDamageMap[damageType].Contains(type);
+            } 
+            catch
+            {
+                return false;
+            }
         }
 
         public void Counter(ICharacter character, int bonusDamage)
