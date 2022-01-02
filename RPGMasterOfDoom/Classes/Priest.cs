@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace RPGMasterOfDoom
 {
-    enum CharacterType
+    class Priest : Character
     {
-        None,
-        Holy,
-        Impious
+        public Priest(string _name) : base(_name, 75, 125, 50, 50, 150, 150, 1, CharacterType.None, DamageType.None, true, true) { }
     }
 }

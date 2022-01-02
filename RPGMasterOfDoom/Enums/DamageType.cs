@@ -8,6 +8,7 @@ namespace RPGMasterOfDoom
 {
     enum DamageType
     {
+        None,
         Blessed,
         Cursed
     }

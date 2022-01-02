@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPGMasterOfDoom
 {
-    class Character : ICharacter
+    abstract class Character : ICharacter
     {
         protected string name { get; }
         protected CharacterType type { get; }
@@ -32,7 +32,6 @@ namespace RPGMasterOfDoom
             int _maximumLife,
             int _currentLife,
             int _maximumAttacksPerRound,
-            int _remainingAttacksOnRound,
             CharacterType _type,
             DamageType _damageType,
             bool _isAnAlive,

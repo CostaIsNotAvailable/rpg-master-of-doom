@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace RPGMasterOfDoom
 {
-    enum CharacterType
+    class Lich : Character
     {
-        None,
-        Holy,
-        Impious
+        public Lich(string _name) : base(_name, 75, 125, 80, 50, 125, 125, 3, CharacterType.None, DamageType.None, true, true) { }
     }
 }

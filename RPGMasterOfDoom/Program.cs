@@ -7,9 +7,9 @@ namespace RPGMasterOfDoom
     {
         static void Main(string[] args)
         {
-            ICharacter hector = new Character("Hector", 75, 75, 75, 30, 200, 200, 2, 1, CharacterType.Holy, DamageType.Blessed, true, false);
-            ICharacter simon = new Character("Simon", 75, 75, 75, 30, 200, 185, 2, 2, CharacterType.Holy, DamageType.Blessed, true, false);
-            ICharacter phil = new Character("Phil", 75, 75, 75, 30, 200, 200, 2, 1, CharacterType.Holy, DamageType.Blessed, true, false);
+            ICharacter hector = new Warrior("Hector");
+            ICharacter simon = new Priest("Simon");
+            ICharacter phil = new Zombie("Phil");
 
             List<ICharacter> teamOneMembers = new List<ICharacter>();
             teamOneMembers.Add(hector);
