@@ -220,12 +220,12 @@ namespace RPGMasterOfDoom
                 .Contains(this))
                 .First();
 
-            List<ICharacterTeam> ennmyTeams = remainingTeams
+            List<ICharacterTeam> ennemyTeams = remainingTeams
                 .Where(team => !team.Members()
                 .Contains(this))
                 .ToList();
 
-            return ennmyTeams
+            return ennemyTeams
                 .SelectMany(team => team.Members())
                 .Where(character => character.IsAlive())
                 .ToList();
