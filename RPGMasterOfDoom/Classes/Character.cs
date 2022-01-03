@@ -12,14 +12,14 @@ namespace RPGMasterOfDoom
         protected CharacterType type { get; }
         protected int attack { get; }
         protected DamageType damageType { get; }
-        protected int damage { get; }
+        protected int damage { get; set; }
         protected int defence { get; }
         protected int initiative { get; }
         protected int currentLife { get; set; }
         protected int maximumLife { get; }
         protected int remainingRoundsOfPain { get; set; } = 0;
         protected int remainingAttacksOnRound { get; set; }
-        protected int maximumAttacksPerRound { get; }
+        protected int maximumAttacksPerRound { get; set; }
         protected bool isAnAlive { get; }
         protected bool isAScavenger { get; }
 
@@ -59,6 +59,8 @@ namespace RPGMasterOfDoom
                 return;
             }
 
+            BeforeDealDamage();
+
             int damageThrow = Randomizer.Throw(CurrentDamage()) + bonusDamage;
             int defenceThrow = Randomizer.Throw(character.CurrentDefence());
             int attackGap = damageThrow - defenceThrow;
@@ -71,6 +73,8 @@ namespace RPGMasterOfDoom
                 Console.WriteLine($"{name} réussi son attaque et inflige {damageToDeal} dégats à {character.Name()}");
                 character.TakeDamage(damageToDeal, damageType);
                 remainingAttacksOnRound--;
+
+                AfterDealDamage();
             }
             else
             {
@@ -89,14 +93,18 @@ namespace RPGMasterOfDoom
 
             Console.WriteLine($"{name} subi {damage} dégats");
 
+            int lifeBeforeTakingDamage = currentLife;
+
             currentLife -= damage;
+
+            AfterTakingDamage(lifeBeforeTakingDamage, damage, currentLife);
 
             if(currentLife <= 0)
             {
                 Console.WriteLine($"{name} est mort");
             }
 
-            if (currentLife > 0 && damage > currentLife)
+            if (!(this is Berserker) && currentLife > 0 && damage > currentLife)
             {
                 bool isSuffering = (damage - currentLife) * 2 / (currentLife + damage) > Randomizer.GetRandom().NextDouble();
 
@@ -187,5 +195,11 @@ namespace RPGMasterOfDoom
         {
             return IsAlive() && CurrentAttack() > 0;
         }
+
+        public virtual void BeforeDealDamage() { }
+
+        public virtual void AfterDealDamage() { }
+
+        public virtual void AfterTakingDamage(int lifeBeforeTakingDamage, int damage, int lifeAfterTakingDamage ) { }
     }
 }
