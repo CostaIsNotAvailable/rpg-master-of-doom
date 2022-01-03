@@ -125,6 +125,11 @@ namespace RPGMasterOfDoom
 
         public void Counter(ICharacter character, int bonusDamage)
         {
+            if (this is Guardian)
+            {
+                bonusDamage = bonusDamage * 2;
+            }
+
             Console.WriteLine($"{name} contre-attaque avec {bonusDamage} dégats bonus");
             DealDamage(character, bonusDamage);
         }
