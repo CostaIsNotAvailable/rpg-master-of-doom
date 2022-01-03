@@ -67,7 +67,7 @@ namespace RPGMasterOfDoom
 
             Console.WriteLine($"{name} tente d'attaquer {character.Name()}");
 
-            if(attackGap > 0)
+            if(attackGap > 0 || character is Zombie)
             {
                 int damageToDeal = attackGap * damage / 100;
                 Console.WriteLine($"{name} réussi son attaque et inflige {damageToDeal} dégats à {character.Name()}");
@@ -201,7 +201,7 @@ namespace RPGMasterOfDoom
                 Console.WriteLine($"{name} est mort");
             }
 
-            if (lifeAfterTakingDamage > 0 && damage > lifeAfterTakingDamage)
+            if ((isAnAlive || this is Ghoul) && lifeAfterTakingDamage > 0 && damage > lifeAfterTakingDamage)
             {
                 bool isSuffering = (damage - lifeAfterTakingDamage) * 2 / (lifeAfterTakingDamage + damage) > Randomizer.GetRandom().NextDouble();
 
