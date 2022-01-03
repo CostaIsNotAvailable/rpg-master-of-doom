@@ -74,7 +74,7 @@ namespace RPGMasterOfDoom
                 character.TakeDamage(damageToDeal, damageType);
                 remainingAttacksOnRound--;
 
-                AfterDealDamage();
+                AfterDealDamage(damageToDeal);
             }
             else
             {
@@ -217,6 +217,6 @@ namespace RPGMasterOfDoom
 
         protected virtual void BeforeDealDamage() { }
 
-        protected virtual void AfterDealDamage() { }
+        protected virtual void AfterDealDamage(int damage) { }
     }
 }
