@@ -61,8 +61,8 @@ namespace RPGMasterOfDoom
 
             BeforeDealDamage();
 
-            int damageThrow = Randomizer.Throw(CurrentDamage()) + bonusDamage;
-            int defenceThrow = Randomizer.Throw(character.CurrentDefence());
+            int damageThrow = CalculateAttackThrow() + bonusDamage;
+            int defenceThrow = character.CalculateDefenceThrow();
             int attackGap = damageThrow - defenceThrow;
 
             Console.WriteLine($"{name} tente d'attaquer {character.Name()}");
@@ -196,10 +196,20 @@ namespace RPGMasterOfDoom
             return IsAlive() && CurrentAttack() > 0;
         }
 
-        public virtual void BeforeDealDamage() { }
+        public virtual int CalculateAttackThrow()
+        {
+            return Randomizer.Throw(damage);
+        }
 
-        public virtual void AfterDealDamage() { }
+        public virtual int CalculateDefenceThrow()
+        {
+            return Randomizer.Throw(defence);
+        }
 
-        public virtual void AfterTakingDamage(int lifeBeforeTakingDamage, int damage, int lifeAfterTakingDamage ) { }
+        protected virtual void BeforeDealDamage() { }
+
+        protected virtual void AfterDealDamage() { }
+
+        protected virtual void AfterTakingDamage(int lifeBeforeTakingDamage, int damage, int lifeAfterTakingDamage ) { }
     }
 }

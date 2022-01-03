@@ -85,5 +85,17 @@ namespace RPGMasterOfDoom
         /// </summary>
         /// <returns></returns>
         bool CanAttack();
+
+        /// <summary>
+        /// Returns attack throw.
+        /// </summary>
+        /// <returns></returns>
+        int CalculateAttackThrow();
+
+        /// <summary>
+        /// Returns defence throw.
+        /// </summary>
+        /// <returns></returns>
+        int CalculateDefenceThrow();
     }
 }
