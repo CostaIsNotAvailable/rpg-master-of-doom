@@ -65,12 +65,12 @@ namespace RPGMasterOfDoom
             int defenceThrow = character.CalculateDefenceThrow();
             int attackGap = damageThrow - defenceThrow;
 
-            Console.WriteLine($"{name} tente d'attaquer {character.Name()}");
+            Console.WriteLine($"{name} ({this.GetType().Name}) tente d'attaquer {character.Name()}");
 
             if(attackGap > 0 || character is Zombie)
             {
                 int damageToDeal = attackGap * damage / 100;
-                Console.WriteLine($"{name} réussi son attaque et inflige {damageToDeal} dégats à {character.Name()}");
+                Console.WriteLine($"{name} ({this.GetType().Name}) réussi son attaque et inflige {damageToDeal} dégats à {character.Name()}");
                 character.TakeDamage(damageToDeal, damageType);
                 remainingAttacksOnRound--;
 
@@ -116,7 +116,7 @@ namespace RPGMasterOfDoom
         {
             int adjustedCounterBonusDamage = CalculateAdjustedCounterBonusDamage(counterBonusDamage);
 
-            Console.WriteLine($"{name} contre-attaque avec {adjustedCounterBonusDamage} dégats bonus");
+            Console.WriteLine($"{name} ({this.GetType().Name}) contre-attaque avec {adjustedCounterBonusDamage} dégats bonus");
             DealDamage(character, adjustedCounterBonusDamage);
         }
 
@@ -125,7 +125,7 @@ namespace RPGMasterOfDoom
             if (remainingRoundsOfPain > 0)
             {
                 remainingRoundsOfPain--;
-                Console.WriteLine($"Il reste {remainingRoundsOfPain} rounds de souffrance à {name}");
+                Console.WriteLine($"Il reste {remainingRoundsOfPain} rounds de souffrance à {name} ({this.GetType().Name})");
             }
         }
 
@@ -203,12 +203,14 @@ namespace RPGMasterOfDoom
 
             if ((isAnAlive || this is Ghoul) && lifeAfterTakingDamage > 0 && damage > lifeAfterTakingDamage)
             {
-                bool isSuffering = (damage - lifeAfterTakingDamage) * 2 / (lifeAfterTakingDamage + damage) > Randomizer.GetRandom().NextDouble();
+                double random = Randomizer.GetRandom().NextDouble();
+                double chanceOfSuffering = (damage - lifeAfterTakingDamage) * 2.0 / (lifeAfterTakingDamage + damage);
+                bool isSuffering = chanceOfSuffering.CompareTo(random) > 0;
 
                 if (isSuffering)
                 {
                     remainingRoundsOfPain += CalculateRoundsOfPain();
-                    Console.WriteLine($"{name} souffre et a {remainingRoundsOfPain} rounds de souffrance");
+                    Console.WriteLine($"{name} ({this.GetType().Name}) souffre et a {remainingRoundsOfPain} rounds de souffrance");
                 }
             }
         }

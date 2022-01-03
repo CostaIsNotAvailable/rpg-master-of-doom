@@ -19,7 +19,7 @@ namespace RPGMasterOfDoom
                 Console.ForegroundColor = team.Color();
                 foreach (ICharacter character in team.Members())
                 {
-                    Console.WriteLine($"{character.Name()} a {character.CurrentLife()} points de vie");
+                    Console.WriteLine($"{character.Name()} ({character.GetType().Name}) a {character.CurrentLife()} points de vie");
                 }
             }
             Console.ForegroundColor = consoleColor;
@@ -87,7 +87,7 @@ namespace RPGMasterOfDoom
                     Console.ForegroundColor = team.Color();
                     foreach (ICharacter character in team.Members())
                     {
-                        Console.WriteLine($"{character.Name()} a {character.CurrentLife()} points de vie");
+                        Console.WriteLine($"{character.Name()} ({character.GetType().Name}) a {character.CurrentLife()} points de vie");
                     }
                 }
                 Console.ForegroundColor = consoleColor;

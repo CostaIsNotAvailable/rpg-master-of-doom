@@ -12,7 +12,9 @@ namespace RPGMasterOfDoom
 
         protected override void BeforeDealDamage()
         {
-            damage += maximumLife - currentLife;
+            int damageUp = maximumLife - currentLife;
+            Console.WriteLine($"{name} ({this.GetType().Name}) augmente ces dégats de {damageUp} pour avoir un total de {damage += damageUp}");
+            damage += damageUp;
         }
 
         protected override void AfterTakingDamage(int lifeBeforeTakingDamage, int damage, int lifeAfterTakingDamage)
@@ -20,7 +22,9 @@ namespace RPGMasterOfDoom
             int halfLife = maximumLife / 2;
             if (lifeBeforeTakingDamage > halfLife && lifeAfterTakingDamage < halfLife)
             {
+                Console.WriteLine($"{name} ({this.GetType().Name}) a moins de la moitié de sa vie et peut donc attaquer 4 fois par tour");
                 maximumAttacksPerRound = 4;
+                remainingAttacksOnRound = 4;
             } 
         }
     }
