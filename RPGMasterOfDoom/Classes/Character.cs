@@ -102,7 +102,10 @@ namespace RPGMasterOfDoom
 
                 if (isSuffering)
                 {
-                    remainingRoundsOfPain += Randomizer.RoundsOfPain();
+                    int roundsOfPain = this is Warrior 
+                        ? 1 
+                        : Randomizer.RoundsOfPain();
+                    remainingRoundsOfPain += roundsOfPain;
                     Console.WriteLine($"{name} souffre et a {remainingRoundsOfPain} rounds de souffrance");
                 }
             }
