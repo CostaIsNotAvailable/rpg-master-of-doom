@@ -32,6 +32,14 @@ namespace RPGMasterOfDoom
             {
                 Console.WriteLine($"------------------- Round {round} -------------------");
                 charactersThatWillAttack = charactersThatWillAttack.OrderByDescending(c => Randomizer.Throw(c.CurrentInitiative())).ToList();
+
+                Console.WriteLine("Les participants lancent leurs effets de début de round:");
+                charactersThatWillAttack.ForEach(c =>
+                {
+                    c.AtRoundBeginning();
+                });
+
+                Console.WriteLine("Les participants vont attaquer:");
                 while (charactersThatWillAttack.Count > 0)
                 {
                     ICharacter character = charactersThatWillAttack[0];

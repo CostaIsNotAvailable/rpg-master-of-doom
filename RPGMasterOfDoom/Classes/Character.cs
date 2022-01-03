@@ -10,7 +10,7 @@ namespace RPGMasterOfDoom
     {
         protected string name { get; }
         protected CharacterType type { get; }
-        protected int attack { get; }
+        protected int attack { get; set; }
         protected DamageType damageType { get; }
         protected int damage { get; set; }
         protected int defence { get; }
@@ -212,6 +212,8 @@ namespace RPGMasterOfDoom
                 }
             }
         }
+
+        public virtual void AtRoundBeginning() { }
 
         protected virtual void BeforeDealDamage() { }
 

@@ -97,5 +97,11 @@ namespace RPGMasterOfDoom
         /// </summary>
         /// <returns></returns>
         int CalculateDefenceThrow();
+
+        /// <summary>
+        /// Executed function at round's beginning.
+        /// </summary>
+        /// <returns></returns>
+        void AtRoundBeginning();
     }
 }
