@@ -10,12 +10,12 @@ namespace RPGMasterOfDoom
     {
         public Berserker(string _name) : base(_name, 100, 100, 80, 20, 300, 300, 1, CharacterType.None, DamageType.None, true, false) { }
 
-        public override void BeforeDealDamage()
+        protected override void BeforeDealDamage()
         {
             damage += maximumLife - currentLife;
         }
 
-        public override void AfterTakingDamage(int lifeBeforeTakingDamage, int damage, int lifeAfterTakingDamage)
+        protected override void AfterTakingDamage(int lifeBeforeTakingDamage, int damage, int lifeAfterTakingDamage)
         {
             int halfLife = maximumLife / 2;
             if (lifeBeforeTakingDamage > halfLife && lifeAfterTakingDamage < halfLife)

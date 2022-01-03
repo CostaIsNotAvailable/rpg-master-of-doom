@@ -98,25 +98,6 @@ namespace RPGMasterOfDoom
             currentLife -= damage;
 
             AfterTakingDamage(lifeBeforeTakingDamage, damage, currentLife);
-
-            if(currentLife <= 0)
-            {
-                Console.WriteLine($"{name} est mort");
-            }
-
-            if (!(this is Berserker) && currentLife > 0 && damage > currentLife)
-            {
-                bool isSuffering = (damage - currentLife) * 2 / (currentLife + damage) > Randomizer.GetRandom().NextDouble();
-
-                if (isSuffering)
-                {
-                    int roundsOfPain = this is Warrior 
-                        ? 1 
-                        : Randomizer.RoundsOfPain();
-                    remainingRoundsOfPain += roundsOfPain;
-                    Console.WriteLine($"{name} souffre et a {remainingRoundsOfPain} rounds de souffrance");
-                }
-            }
         }
 
         private bool isDamageCritical(DamageType damageType)
@@ -131,15 +112,12 @@ namespace RPGMasterOfDoom
             }
         }
 
-        public void Counter(ICharacter character, int bonusDamage)
+        public void Counter(ICharacter character, int counterBonusDamage)
         {
-            if (this is Guardian)
-            {
-                bonusDamage = bonusDamage * 2;
-            }
+            int adjustedCounterBonusDamage = CalculateAdjustedCounterBonusDamage(counterBonusDamage);
 
-            Console.WriteLine($"{name} contre-attaque avec {bonusDamage} dégats bonus");
-            DealDamage(character, bonusDamage);
+            Console.WriteLine($"{name} contre-attaque avec {adjustedCounterBonusDamage} dégats bonus");
+            DealDamage(character, adjustedCounterBonusDamage);
         }
 
         public void DecrementRemainingRoundsOfPain()
@@ -206,10 +184,37 @@ namespace RPGMasterOfDoom
             return Randomizer.Throw(defence);
         }
 
+        public virtual int CalculateRoundsOfPain()
+        {
+            return Randomizer.RoundsOfPain();
+        }
+
+        public virtual int CalculateAdjustedCounterBonusDamage(int counterBonusDamage)
+        {
+            return counterBonusDamage;
+        }
+
+        protected virtual void AfterTakingDamage(int lifeBeforeTakingDamage, int damage, int lifeAfterTakingDamage)
+        {
+            if (lifeAfterTakingDamage <= 0)
+            {
+                Console.WriteLine($"{name} est mort");
+            }
+
+            if (lifeAfterTakingDamage > 0 && damage > lifeAfterTakingDamage)
+            {
+                bool isSuffering = (damage - lifeAfterTakingDamage) * 2 / (lifeAfterTakingDamage + damage) > Randomizer.GetRandom().NextDouble();
+
+                if (isSuffering)
+                {
+                    remainingRoundsOfPain += CalculateRoundsOfPain();
+                    Console.WriteLine($"{name} souffre et a {remainingRoundsOfPain} rounds de souffrance");
+                }
+            }
+        }
+
         protected virtual void BeforeDealDamage() { }
 
         protected virtual void AfterDealDamage() { }
-
-        protected virtual void AfterTakingDamage(int lifeBeforeTakingDamage, int damage, int lifeAfterTakingDamage ) { }
     }
 }
