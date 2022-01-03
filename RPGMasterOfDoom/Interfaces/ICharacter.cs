@@ -103,5 +103,17 @@ namespace RPGMasterOfDoom
         /// </summary>
         /// <returns></returns>
         void AtRoundBeginning();
+
+        /// <summary>
+        /// Returns list of attackable characters.
+        /// </summary>
+        /// <returns></returns>
+        List<ICharacter> AttackableCharacters(List<ICharacterTeam> remainingTeams);
+
+        /// <summary>
+        /// Returns list of characters that will actually be attacked.
+        /// </summary>
+        /// <returns></returns>
+        List<ICharacter> CharactersToAttack(List<ICharacter> attackableCharacters);
     }
 }

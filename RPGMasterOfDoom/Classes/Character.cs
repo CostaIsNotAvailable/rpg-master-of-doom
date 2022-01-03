@@ -213,6 +213,37 @@ namespace RPGMasterOfDoom
             }
         }
 
+        public virtual List<ICharacter> AttackableCharacters(List<ICharacterTeam> remainingTeams)
+        {
+            ICharacterTeam characterTeam = remainingTeams
+                .Where(team => team.Members()
+                .Contains(this))
+                .First();
+
+            List<ICharacterTeam> ennmyTeams = remainingTeams
+                .Where(team => !team.Members()
+                .Contains(this))
+                .ToList();
+
+            return ennmyTeams
+                .SelectMany(team => team.Members())
+                .Where(character => character.IsAlive())
+                .ToList();
+        }
+
+        public virtual List<ICharacter> CharactersToAttack(List<ICharacter> attackableCharacters)
+        {
+            List<ICharacter> charactersToAttack = new List<ICharacter>();
+            ICharacter characterToAttack = attackableCharacters[Randomizer.GetRandom().Next(attackableCharacters.Count)];
+            charactersToAttack.Add(characterToAttack);
+            return charactersToAttack;
+        }
+
+        private static List<ICharacterTeam> GetRemainingTeams(List<ICharacterTeam> teams)
+        {
+            return teams.Where(t => t.IsAlive()).ToList();
+        }
+
         public virtual void AtRoundBeginning() { }
 
         protected virtual void BeforeDealDamage() { }

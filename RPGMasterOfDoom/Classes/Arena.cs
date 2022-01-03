@@ -34,10 +34,10 @@ namespace RPGMasterOfDoom
                 charactersThatWillAttack = charactersThatWillAttack.OrderByDescending(c => Randomizer.Throw(c.CurrentInitiative())).ToList();
 
                 Console.WriteLine("Les participants lancent leurs effets de début de round:");
-                charactersThatWillAttack.ForEach(c =>
+                foreach (ICharacter character in charactersThatWillAttack)
                 {
-                    c.AtRoundBeginning();
-                });
+                    character.AtRoundBeginning();
+                }
 
                 Console.WriteLine("Les participants vont attaquer:");
                 while (charactersThatWillAttack.Count > 0)
@@ -48,33 +48,25 @@ namespace RPGMasterOfDoom
                         .Where(team => team.Members()
                         .Contains(character))
                         .First();
-
                     Console.ForegroundColor = characterTeam.Color();
 
-                    remainingTeams = GetRemainingTeams(teams);
-
-                    List<ICharacterTeam> ennmyTeams = remainingTeams
-                        .Where(team => !team.Members()
-                        .Contains(character))
-                        .ToList();
-
-                    List<ICharacter> attackableCharacters = ennmyTeams
-                        .SelectMany(team => team.Members())
-                        .Where(character => character.IsAlive())
-                        .ToList();
+                    List<ICharacter> attackableCharacters = character.AttackableCharacters(remainingTeams);
 
                     if (attackableCharacters.Any())
                     {
-                        ICharacter characterToAttack = attackableCharacters[Randomizer.GetRandom().Next(attackableCharacters.Count)];
+                        List<ICharacter> charactersToAttack = character.CharactersToAttack(attackableCharacters);
 
-                        if (character.CanAttack() && characterToAttack.IsAlive())
+                        foreach (ICharacter characterToAttack in charactersToAttack)
                         {
-                            character.DealDamage(characterToAttack);
-                        }
+                            if (character.CanAttack() && characterToAttack.IsAlive())
+                            {
+                                character.DealDamage(characterToAttack);
+                            }
 
-                        if (!characterToAttack.IsAlive())
-                        {
-                            charactersThatWillAttack.Remove(characterToAttack);
+                            if (!characterToAttack.IsAlive())
+                            {
+                                charactersThatWillAttack.Remove(characterToAttack);
+                            }
                         }
                     }
 
